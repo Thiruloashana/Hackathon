@@ -33,38 +33,50 @@ f.close()
 
 def traverse(visited,min_ind,minn,c):
     c+=1
-    if(c==19):
+    if(c==20):
+        visited.append('r0')
+        print(visited)
+        path={}
+        path[0]=visited[0]
+        for i in range(1,len(visited)-1):
+            y='n'
+            y+=str(visited[i])
+            path[i]=y
+        path[21]=visited[21]
+
+        for p,q in path.items():
+            print(p,q)
+        v0={}
+        path={}
+        with open("level0_out.json", "w") as outfile:
+            json_object = json.dumps(path, indent=4)
+            outfile.write(json_object)        
         exit(0)
-    print("minn",minn)
-    print("min_ind",min_ind)
+
     for i in range(n_neigh):
         for j,k in n_ndist.items():
-            print(j,min_ind)
             if j==min_ind:
                     m=n_ndist[min_ind]['distances'][0]
                     for i in range(len(n_ndist[min_ind]['distances'])):
                         if m>n_ndist[min_ind]['distances'][i] and n_ndist[min_ind]['distances'][i]!=0:
                             m=n_ndist[min_ind]['distances'][i]
-                    print("m",m)
                     m_ind=n_ndist[min_ind]['distances'].index(m)
-                    print("m_ind",m_ind)
                     x=[]
                     x=n_ndist[min_ind]['distances']
                     while m_ind in visited:
                         x=[ele for ele in x if x.index(ele) not in visited]
-                        print(index)
                         m=x[0]
                         for i in range(len(x)):
                             if m>x[i] and x[i]!=0:
                                 m=x[i]                             
                         m_ind=n_ndist[min_ind]['distances'].index(m)                    
                     visited.append(m_ind)
-                    print("visited: ",visited)
                     traverse(visited,m_ind,m,c)
                                      
 
 c=0
 visited=[]
+visited.append('r0')
 minn=min(r_ndist)
 min_ind=r_ndist.index(minn)
 visited.append(min_ind)
