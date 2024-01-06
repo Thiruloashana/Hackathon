@@ -24,9 +24,6 @@ for key,value in data.items():
                for k2,v2 in rest.items():
                    if k2=='neighbourhood_distance':
                        r_ndist=v2
-print("R_NDIST")
-print(r_ndist)
-print("N_NDIST")
 for key,value in n_ndist.items():
     print(n_ndist[key]['distances']) 
 f.close()
@@ -36,21 +33,26 @@ def traverse(visited,min_ind,minn,c):
     if(c==20):
         visited.append('r0')
         print(visited)
-        path={}
-        path[0]=visited[0]
+        for i in range(1,len(visited)-1):
+            visited[i]=str(visited[i])
+            y='n'+ visited[i]
+            visited[i]=y
+        '''paths=[]
+        paths.append(visited[0])
         for i in range(1,len(visited)-1):
             y='n'
             y+=str(visited[i])
-            path[i]=y
-        path[21]=visited[21]
+            paths[i].append(y)
+        paths.append(visited[21])'''
 
-        for p,q in path.items():
-            print(p,q)
-        v0={}
-        path={}
-        with open("level0_out.json", "w") as outfile:
-            json_object = json.dumps(path, indent=4)
-            outfile.write(json_object)        
+        '''for p,q in paths.items():
+            print(p,q)'''
+        print(visited)
+        v0 = {"path": visited}
+        output_dict = {"v0": v0}
+        with open("level0_output.json", "w") as outfile:
+            json.dump(output_dict, outfile) 
+        f.close()    
         exit(0)
 
     for i in range(n_neigh):
@@ -73,7 +75,6 @@ def traverse(visited,min_ind,minn,c):
                     visited.append(m_ind)
                     traverse(visited,m_ind,m,c)
                                      
-
 c=0
 visited=[]
 visited.append('r0')
