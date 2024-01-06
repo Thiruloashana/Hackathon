@@ -9,14 +9,12 @@ n_ndist={}
 index=0
 for key,value in data.items():
     n_neigh=data['n_neighbourhoods']
-    print()
 
     if key=='neighbourhoods':
         for k,v in data[key].items():
             n_ndist[index]=v
             index+=1
 
-    print()
     if key=='restaurants':
        for k1,v1 in data[key].items():
            if k1=='r0':
@@ -24,30 +22,17 @@ for key,value in data.items():
                for k2,v2 in rest.items():
                    if k2=='neighbourhood_distance':
                        r_ndist=v2
-for key,value in n_ndist.items():
-    print(n_ndist[key]['distances']) 
 f.close()
 
 def traverse(visited,min_ind,minn,c):
     c+=1
     if(c==20):
         visited.append('r0')
-        print(visited)
         for i in range(1,len(visited)-1):
             visited[i]=str(visited[i])
             y='n'+ visited[i]
             visited[i]=y
-        '''paths=[]
-        paths.append(visited[0])
-        for i in range(1,len(visited)-1):
-            y='n'
-            y+=str(visited[i])
-            paths[i].append(y)
-        paths.append(visited[21])'''
 
-        '''for p,q in paths.items():
-            print(p,q)'''
-        print(visited)
         v0 = {"path": visited}
         output_dict = {"v0": v0}
         with open("level0_output.json", "w") as outfile:
