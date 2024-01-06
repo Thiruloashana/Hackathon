@@ -31,25 +31,41 @@ for key,value in n_ndist.items():
     print(n_ndist[key]['distances']) 
 f.close()
 
-def traverse(visited,min_ind):
+def traverse(visited,min_ind,minn,c):
+    c+=1
+    if(c==19):
+        exit(0)
+    print("minn",minn)
+    print("min_ind",min_ind)
     for i in range(n_neigh):
         for j,k in n_ndist.items():
+            print(j,min_ind)
             if j==min_ind:
-                for z in range(len(n_ndist[j]['distances'])):
-                    m=min(n_ndist[j]['distances'][z])
-                    m_ind=n_ndist[j]['distances'][z].index(m)
+                    m=n_ndist[min_ind]['distances'][0]
+                    for i in range(len(n_ndist[min_ind]['distances'])):
+                        if m>n_ndist[min_ind]['distances'][i] and n_ndist[min_ind]['distances'][i]!=0:
+                            m=n_ndist[min_ind]['distances'][i]
+                    print("m",m)
+                    m_ind=n_ndist[min_ind]['distances'].index(m)
+                    print("m_ind",m_ind)
+                    x=[]
+                    x=n_ndist[min_ind]['distances']
                     while m_ind in visited:
-                        n_ndist[j]['distances'][z].remove(m)
-                        m=min(n_ndist[j]['distances'][z])     
-                        m_ind=n_ndist[j]['distances'][z].index(m)                    
+                        x=[ele for ele in x if x.index(ele) not in visited]
+                        print(index)
+                        m=x[0]
+                        for i in range(len(x)):
+                            if m>x[i] and x[i]!=0:
+                                m=x[i]                             
+                        m_ind=n_ndist[min_ind]['distances'].index(m)                    
                     visited.append(m_ind)
-                    traverse(visited,m_ind)
+                    print("visited: ",visited)
+                    traverse(visited,m_ind,m,c)
                                      
 
-
+c=0
 visited=[]
 minn=min(r_ndist)
 min_ind=r_ndist.index(minn)
 visited.append(min_ind)
-#traverse(visited,min_ind)
-print(n_ndist[j]['distances'][0])
+traverse(visited,min_ind,minn,c)
