@@ -38,10 +38,11 @@ for i in range(len(n_ndist)):
 for x,y in dist.items():
     print(x,y)
 
-paths=[]
+paths={}
 visited_track=[]
-
-def traverse(visited,min_ind,cap,orders,c,paths):
+paths_f=[[]]
+count=0
+def traverse(visited,min_ind,cap,orders,c,paths,count):
     #print(visited)
     print(orders)
     c+=1
@@ -59,15 +60,8 @@ def traverse(visited,min_ind,cap,orders,c,paths):
             json.dump(output_dict, outfile) 
         f.close()''' 
         visited.append("r0")
-        paths.extend(visited)
+        paths[count]=visited
         print(paths)
-        paths_f = [[paths[0]]]
-        for item in paths[1:]:
-            if item == 'r0':
-                paths_f.append([item])
-            else:
-                paths_f[-1].append(item)
-        print(paths_f)
         exit(0)
 
     for i in range(n_neigh):
@@ -97,13 +91,14 @@ def traverse(visited,min_ind,cap,orders,c,paths):
                     else:
                         cap=capacity
                         visited.append("r0")
-                        paths.extend(visited)
+                        paths[count]=visited
+                        count+=1
                         print(paths)
                         visited.clear()
                         print(visited)
                         visited.append("r0")
                     
-                    traverse(visited,m_ind,cap,orders,c,paths)
+                    traverse(visited,m_ind,cap,orders,c,paths,count)
                                     
 c=0
 visited=[]
@@ -115,4 +110,4 @@ visited_track.append(min_ind)
 orders=[n_ndist[i]['order_quantity'] for i in range(len(n_ndist))]
 print(orders)
 orders[min_ind]=0
-traverse(visited,min_ind,cap,orders,c,paths)
+traverse(visited,min_ind,cap,orders,c,paths,count)
